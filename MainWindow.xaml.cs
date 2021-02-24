@@ -274,19 +274,121 @@ namespace TILab1
             return Result;
         }
 
-        static string RotatingLatticeEncrypt(string SourceText, string key)
+        static string RotatingLatticeEncrypt(string SourceText, bool[,] Mask)
         {
             string Result = "";
+            int i, j, k, Ind = 0;
+            while (SourceText.Length % 25 != 0)
+                SourceText += " ";
             int SourceLength = SourceText.Length;
+            char[,] Cipher = new char[5, 5];
+            int NumOfBlocks = SourceLength / 25;
 
+            for (k = 0; k < NumOfBlocks; k++)
+            {
+                for (i = 0; i < 5; i++)
+                {
+                    for (j = 0; j < 5; j++)
+                    {
+                        if (Mask[i, j])
+                            Cipher[i, j] = SourceText[Ind++];
+                    }
+                }
+                Mask[2, 2] = false;
+                for (j = 0; j < 5; j++)
+                {
+                    for (i = 4; i >= 0; i--)
+                    {
+                        if (Mask[i, j])
+                            Cipher[j, 4 - i] = SourceText[Ind++];
+                    }
+                }
+                for (i = 4; i >= 0; i--)
+                {
+                    for (j = 4; j >= 0; j--)
+                    {
+                        if (Mask[i, j])
+                            Cipher[4 - i, 4 - j] = SourceText[Ind++];
+                    }
+                }
+                
+                for (j = 4; j >= 0; j--)
+                {
+                    for (i = 0; i < 5; i++)
+                    {
+                        if (Mask[i, j])
+                            Cipher[4 - j, i] = SourceText[Ind++];
+                    }
+                }
+                for (i = 0; i < 5; i++)
+                {
+                    for (j = 0; j < 5; j++)
+                    {
+                        Result += Cipher[i, j];
+                    }
+                }
+                Mask[2, 2] = true;
+            }
+            
             return Result;
         }
 
-        static string RotatingLatticeDecrypt(string SourceText, string key)
+        static string RotatingLatticeDecrypt(string SourceText, bool[,] Mask)
         {
             string Result = "";
+            int i, j, k, Ind = 0;
+            //while (SourceText.Length % 25 != 0)
+            //    SourceText += " ";
             int SourceLength = SourceText.Length;
-            
+            char[,] Cipher = new char[5, 5];
+            int NumOfBlocks = SourceLength / 25;
+
+            for (k = 0; k < NumOfBlocks; k++)
+            {
+                for (i = 0; i < 5; i++)
+                {
+                    for (j = 0; j < 5; j++)
+                    {
+                        Cipher[i, j] = SourceText[Ind++];
+                    }
+                }
+                for (i = 0; i < 5; i++)
+                {
+                    for (j = 0; j < 5; j++)
+                    {
+                        if (Mask[i, j])
+                            Result += Cipher[i, j];
+                    }
+                }
+                Mask[2, 2] = false;
+                for (j = 0; j < 5; j++)
+                {
+                    for (i = 4; i >= 0; i--)
+                    {
+                        if (Mask[i, j])
+                            Result += Cipher[j, 4 - i];
+                    }
+                }
+                for (i = 4; i >= 0; i--)
+                {
+                    for (j = 4; j >= 0; j--)
+                    {
+                        if (Mask[i, j])
+                           Result += Cipher[4 - i, 4 - j];
+                    }
+                }
+
+                for (j = 4; j >= 0; j--)
+                {
+                    for (i = 0; i < 5; i++)
+                    {
+                        if (Mask[i, j])
+                            Result += Cipher[4 - j, i];
+                    }
+                }                
+                Mask[2, 2] = true;
+            }
+
             return Result;
         }
 
@@ -302,6 +404,73 @@ namespace TILab1
             }
             else if ((bool)RotatingLatticeRadioButton.IsChecked)
             {
+                bool[,] Mask = new bool[5, 5];
+                int i, j;
+                for (i = 0; i < 5; i++)
+                {
+                    for (j = 0; j < 5; j++)
+                    {
+                        Mask[i, j] = false;
+                    }
+                }
+                if ((bool)RB1_1.IsChecked)
+                    Mask[0, 0] = true;
+                if ((bool)RB1_2.IsChecked)
+                    Mask[0, 4] = true;
+                if ((bool)RB1_3.IsChecked)
+                    Mask[4, 4] = true;
+                if ((bool)RB1_4.IsChecked)
+                    Mask[4, 0] = true;
+
+                if ((bool)RB2_1.IsChecked)
+                    Mask[0, 1] = true;
+                if ((bool)RB2_2.IsChecked)
+                    Mask[1, 4] = true;
+                if ((bool)RB2_3.IsChecked)
+                    Mask[4, 3] = true;
+                if ((bool)RB2_4.IsChecked)
+                    Mask[3, 0] = true;
+
+                if ((bool)RB3_1.IsChecked)
+                    Mask[0, 2] = true;
+                if ((bool)RB3_2.IsChecked)
+                    Mask[2, 4] = true;
+                if ((bool)RB3_3.IsChecked)
+                    Mask[4, 2] = true;
+                if ((bool)RB3_4.IsChecked)
+                    Mask[2, 0] = true;
+
+                if ((bool)RB4_1.IsChecked)
+                    Mask[0, 3] = true;
+                if ((bool)RB4_2.IsChecked)
+                    Mask[3, 4] = true;
+                if ((bool)RB4_3.IsChecked)
+                    Mask[4, 1] = true;
+                if ((bool)RB4_4.IsChecked)
+                    Mask[1, 0] = true;
+
+                if ((bool)RB5_1.IsChecked)
+                    Mask[1, 1] = true;
+                if ((bool)RB5_2.IsChecked)
+                    Mask[1, 3] = true;
+                if ((bool)RB5_3.IsChecked)
+                    Mask[3, 3] = true;
+                if ((bool)RB5_4.IsChecked)
+                    Mask[3, 1] = true;
+
+                if ((bool)RB6_1.IsChecked)
+                    Mask[1, 2] = true;
+                if ((bool)RB6_2.IsChecked)
+                    Mask[2, 3] = true;
+                if ((bool)RB6_3.IsChecked)
+                    Mask[3, 2] = true;
+                if ((bool)RB6_4.IsChecked)
+                    Mask[2, 1] = true;
+
+                Mask[2, 2] = true;
+
+                ResultText.Text = RotatingLatticeEncrypt(SourceText.Text, Mask);
+
             }
             else if ((bool)CaesarRadioButton.IsChecked)
             {
@@ -321,6 +490,73 @@ namespace TILab1
             }
             else if ((bool)RotatingLatticeRadioButton.IsChecked)
             {
+
+                bool[,] Mask = new bool[5, 5];
+                int i, j;
+                for (i = 0; i < 5; i++)
+                {
+                    for (j = 0; j < 5; j++)
+                    {
+                        Mask[i, j] = false;
+                    }
+                }
+                if ((bool)RB1_1.IsChecked)
+                    Mask[0, 0] = true;
+                if ((bool)RB1_2.IsChecked)
+                    Mask[0, 4] = true;
+                if ((bool)RB1_3.IsChecked)
+                    Mask[4, 4] = true;
+                if ((bool)RB1_4.IsChecked)
+                    Mask[4, 0] = true;
+
+                if ((bool)RB2_1.IsChecked)
+                    Mask[0, 1] = true;
+                if ((bool)RB2_2.IsChecked)
+                    Mask[1, 4] = true;
+                if ((bool)RB2_3.IsChecked)
+                    Mask[4, 3] = true;
+                if ((bool)RB2_4.IsChecked)
+                    Mask[3, 0] = true;
+
+                if ((bool)RB3_1.IsChecked)
+                    Mask[0, 2] = true;
+                if ((bool)RB3_2.IsChecked)
+                    Mask[2, 4] = true;
+                if ((bool)RB3_3.IsChecked)
+                    Mask[4, 2] = true;
+                if ((bool)RB3_4.IsChecked)
+                    Mask[2, 0] = true;
+
+                if ((bool)RB4_1.IsChecked)
+                    Mask[0, 3] = true;
+                if ((bool)RB4_2.IsChecked)
+                    Mask[3, 4] = true;
+                if ((bool)RB4_3.IsChecked)
+                    Mask[4, 1] = true;
+                if ((bool)RB4_4.IsChecked)
+                    Mask[1, 0] = true;
+
+                if ((bool)RB5_1.IsChecked)
+                    Mask[1, 1] = true;
+                if ((bool)RB5_2.IsChecked)
+                    Mask[1, 3] = true;
+                if ((bool)RB5_3.IsChecked)
+                    Mask[3, 3] = true;
+                if ((bool)RB5_4.IsChecked)
+                    Mask[3, 1] = true;
+
+                if ((bool)RB6_1.IsChecked)
+                    Mask[1, 2] = true;
+                if ((bool)RB6_2.IsChecked)
+                    Mask[2, 3] = true;
+                if ((bool)RB6_3.IsChecked)
+                    Mask[3, 2] = true;
+                if ((bool)RB6_4.IsChecked)
+                    Mask[2, 1] = true;
+
+                Mask[2, 2] = true;
+
+                ResultText.Text = RotatingLatticeDecrypt(SourceText.Text, Mask);
 
             }
             else if ((bool)CaesarRadioButton.IsChecked)
