@@ -197,15 +197,92 @@ namespace TILab1
             return Result;
         }
 
+        static string RailFenceEncrypt(string SourceText, int key)
+        {
+            string Result = "";
+            int Period = 2 * (key - 1);
+            int SourceLength = SourceText.Length;
+            int Mod;
+            int i, j;
+            for (i = 1; i <= key; i++)
+            {
+                for (j = 0; j < SourceLength; j++)
+                {
+                    Mod = (j + 1) % Period;
+                    if (Mod == 0)
+                        Mod = Period;
+                    if (Mod > key)
+                    {
+                        Mod = key - (Mod - key);
+                    }
+                    if (Mod == i)
+                        Result += SourceText[j];
+                }
+            }            
+            return Result;
+        }
+
+        static string RailFenceDecrypt(string SourceText, int key)
+        {
+            string Result = "";
+            int Period = 2 * (key - 1);
+            int SourceLength = SourceText.Length;
+            int Mod;
+            int i, j, Counter, Ind;
+            string[] Cipher = new string[key];
+            bool isDown;
+            for (i = 0; i < key; i++)
+            {
+                Cipher[i] = "";
+            }
+            Ind = 0;
+            for (i = 1; i <= key; i++)
+            {
+                for (j = 0, Counter = 0; j < SourceLength; j++)
+                {
+                    Mod = (j + 1) % Period;
+                    if (Mod == 0)
+                        Mod = Period;
+                    if (Mod > key)
+                    {
+                        Mod = key - (Mod - key);
+                    }
+                    if (Mod == i)
+                        Counter++;
+                }
+                for (j = 0; j < Counter; j++)
+                {
+                    Cipher[i - 1] += SourceText[Ind++];
+                }
+            }
+            isDown = true;
+            Counter = 0;
+            for (i = 0; Counter < SourceLength;)
+            {
+                Result += Cipher[i][0];
+                Cipher[i] = Cipher[i].Substring(1);
+                Counter++;
+                if ((i + 1) == key)
+                    isDown = false;
+                if ((i + 1) == 1)
+                    isDown = true;
+                if (isDown)
+                    i++;
+                else
+                    i--;          
+            }
+            return Result;
+        }
+
         private void EncryptButton_Click(object sender, RoutedEventArgs e)
         {
             if ((bool)RailFenceRadioButton.IsChecked)
             {
-
+                ResultText.Text = RailFenceEncrypt(SourceText.Text, Int32.Parse(Key.Text));
             }
             else if ((bool)СolumnRadioButton.IsChecked)
             {
-                ResultText.Text = ColumnEncrypt(SourceText.Text, Key.Text);
+                ResultText.Text = ColumnEncrypt(SourceText.Text, Key.Text.ToUpper());
             }
             else if ((bool)RotatingLatticeRadioButton.IsChecked)
             {
@@ -220,11 +297,11 @@ namespace TILab1
         {
             if ((bool)RailFenceRadioButton.IsChecked)
             {
-
+                ResultText.Text = RailFenceDecrypt(SourceText.Text, Int32.Parse(Key.Text));
             }
             else if ((bool)СolumnRadioButton.IsChecked)
             {
-                ResultText.Text = ColumnDecrypt(SourceText.Text, Key.Text);
+                ResultText.Text = ColumnDecrypt(SourceText.Text, Key.Text.ToUpper());
             }
             else if ((bool)RotatingLatticeRadioButton.IsChecked)
             {
