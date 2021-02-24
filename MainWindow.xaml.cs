@@ -132,6 +132,71 @@ namespace TILab1
             return Result;
         }
 
+        static string ColumnDecrypt(string SourceText, string key)
+        {
+            string Result = "";
+            int KeyLength = key.Length, NumOfRows = (int)Math.Ceiling((double)SourceText.Length / KeyLength) + 2, SourceLength = SourceText.Length;
+            int Mod = SourceLength % KeyLength;
+            char[,] Matrix = new char[NumOfRows, KeyLength];
+            int i, j, k;
+            int MinInd, Ind = 0;
+            for (i = 0; i < NumOfRows; i++)
+            {
+                for (j = 0; j < KeyLength; j++)
+                {
+                    Matrix[i, j] = (char)0;
+                }
+            }
+            for (i = 0; i < KeyLength; i++)
+            {
+                Matrix[0, i] = key[i];
+            }
+            for (i = 0, Ind = 0; i < KeyLength; i++)
+            {
+                if (Matrix[0, i] > Matrix[0, Ind])
+                    Ind = i;
+            }
+            for (i = 0; i < KeyLength; i++)
+            {
+                for (j = 0, MinInd = Ind; j < KeyLength; j++)
+                {
+                    if (((Matrix[0, j] < Matrix[0, MinInd]) || ((Matrix[0, j] == Matrix[0, MinInd]) && (Matrix[1, MinInd] != (char)0))) && (Matrix[1, j] == (char)0))
+                    {
+                        MinInd = j;
+                    }
+                }
+                if (Matrix[1, MinInd] == 0)
+                    Matrix[1, MinInd] = (char)(i + 1);
+            }
+            MinInd = 1;
+            Ind = 0;
+            for (k = 0; k < KeyLength; k++)
+            {
+                for (i = 0; i < KeyLength; i++)
+                {
+                    if (Matrix[1, i] == MinInd)
+                    {
+                        for (j = 2; j < ((i < Mod) ? NumOfRows : NumOfRows - 1); j++)
+                        {
+                            Matrix[j, i] = SourceText[Ind++];
+                        }
+                        MinInd++;
+                    }
+                }
+            }
+            Ind = 0;
+            for (i = 2; i < NumOfRows && Ind < SourceLength; i++)
+            {
+                for (j = 0; j < KeyLength && Ind < SourceLength; j++)
+                {
+                    Result += Matrix[i, j];
+                    Ind++;
+                }
+            }
+
+            return Result;
+        }
+
         private void EncryptButton_Click(object sender, RoutedEventArgs e)
         {
             if ((bool)RailFenceRadioButton.IsChecked)
@@ -159,7 +224,7 @@ namespace TILab1
             }
             else if ((bool)СolumnRadioButton.IsChecked)
             {
-
+                ResultText.Text = ColumnDecrypt(SourceText.Text, Key.Text);
             }
             else if ((bool)RotatingLatticeRadioButton.IsChecked)
             {
