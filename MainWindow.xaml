@@ -12,13 +12,39 @@
         <Button x:Name="DecryptButton" Content="Расшифровать" HorizontalAlignment="Left" Margin="138,184,0,0" VerticalAlignment="Top" Width="107" Height="30" Click="DecryptButton_Click"/>
         <TextBox x:Name="ResultText" HorizontalAlignment="Left" Height="28" Margin="10,257,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="562"/>
         <TextBox x:Name="Key" HorizontalAlignment="Left" Height="29" Margin="407,98,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="165"/>
-        <RadioButton x:Name="RailFenceRadioButton" GroupName="Algorithm" Content="Метод железнодорожной изгороди" HorizontalAlignment="Left" Margin="11,74,0,0" VerticalAlignment="Top" Height="19" Width="260" IsChecked="True"/>
-        <RadioButton x:Name="СolumnRadioButton" GroupName="Algorithm" Content="Столбцовый метод" HorizontalAlignment="Left" Margin="11,99,0,0" VerticalAlignment="Top" Height="19" Width="149"/>
-        <RadioButton x:Name="RotatingLatticeRadioButton" GroupName="Algorithm" Content="Метод поворачивающейся решетки" HorizontalAlignment="Left" Margin="11,124,0,0" VerticalAlignment="Top" Height="19" Width="263"/>
-        <RadioButton x:Name="CaesarRadioButton" GroupName="Algorithm" Content="Шифр Цезаря" HorizontalAlignment="Left" Margin="11,149,0,0" VerticalAlignment="Top" Height="19" Width="115"/>
+        <RadioButton x:Name="RailFenceRadioButton" GroupName="Algorithm" Content="Метод железнодорожной изгороди" HorizontalAlignment="Left" Margin="11,74,0,0" VerticalAlignment="Top" Height="19" Width="260" IsChecked="True" Click="RailFenceRadioButton_Click"/>
+        <RadioButton x:Name="СolumnRadioButton" GroupName="Algorithm" Content="Столбцовый метод" HorizontalAlignment="Left" Margin="11,99,0,0" VerticalAlignment="Top" Height="19" Width="149" Checked="СolumnRadioButton_Checked"/>
+        <RadioButton x:Name="RotatingLatticeRadioButton" GroupName="Algorithm" Content="Метод поворачивающейся решетки" HorizontalAlignment="Left" Margin="11,124,0,0" VerticalAlignment="Top" Height="19" Width="263" Checked="RotatingLatticeRadioButton_Checked"/>
+        <RadioButton x:Name="CaesarRadioButton" GroupName="Algorithm" Content="Шифр Цезаря" HorizontalAlignment="Left" Margin="11,149,0,0" VerticalAlignment="Top" Height="19" Width="115" Checked="CaesarRadioButton_Checked"/>
         <TextBlock x:Name="textBlock" HorizontalAlignment="Left" Margin="10,6,0,0" TextWrapping="Wrap" Text="Исходная строка" VerticalAlignment="Top" Height="20" Width="111"/>
         <TextBlock x:Name="textBlock1" HorizontalAlignment="Left" Margin="407,73,0,0" TextWrapping="Wrap" Text="Ключ" VerticalAlignment="Top" Height="20" Width="59"/>
         <TextBlock x:Name="textBlock_Copy" HorizontalAlignment="Left" Margin="10,230,0,0" TextWrapping="Wrap" Text="Результат" VerticalAlignment="Top" Height="20" Width="63"/>
+        <RadioButton x:Name="RB3_1" Content="" HorizontalAlignment="Left" Margin="484,145,0,0" VerticalAlignment="Top" GroupName="Key3" Width="14"/>
+        <RadioButton x:Name="RB4_1" Content="" HorizontalAlignment="Left" Margin="505,145,0,0" VerticalAlignment="Top" GroupName="Key4" Width="14"/>
+        <RadioButton x:Name="RB2_1" Content="" HorizontalAlignment="Left" Margin="463,145,0,0" VerticalAlignment="Top" GroupName="Key2" Width="14"/>
+        <RadioButton x:Name="RB1_2" Content="" HorizontalAlignment="Left" Margin="524,145,0,0" VerticalAlignment="Top" GroupName="Key1" Width="14"/>
+        <RadioButton x:Name="RB1_1" Content="" HorizontalAlignment="Left" Margin="442,145,0,0" VerticalAlignment="Top" GroupName="Key1" IsChecked="True" Width="14"/>
+        <RadioButton x:Name="RB6_1" Content="" HorizontalAlignment="Left" Margin="484,164,0,0" VerticalAlignment="Top" GroupName="Key6" Width="14"/>
+        <RadioButton x:Name="RB5_2" Content="" HorizontalAlignment="Left" Margin="505,164,0,0" VerticalAlignment="Top" GroupName="Key5" Width="14"/>
+        <RadioButton x:Name="RB5_1" Content="" HorizontalAlignment="Left" Margin="463,164,0,0" VerticalAlignment="Top" GroupName="Key5" IsChecked="True" Width="14"/>
+        <RadioButton x:Name="RB2_2" Content="" HorizontalAlignment="Left" Margin="524,164,0,0" VerticalAlignment="Top" GroupName="Key2" Width="14"/>
+        <RadioButton x:Name="RB4_4" Content="" HorizontalAlignment="Left" Margin="442,164,0,0" VerticalAlignment="Top" GroupName="Key4" IsChecked="True" Width="14"/>
+        <RadioButton x:Name="RB7" Content="" HorizontalAlignment="Left" Margin="484,184,0,0" VerticalAlignment="Top" GroupName="Key7" IsChecked="True" Width="14"/>
+        <RadioButton x:Name="RB6_2" Content="" HorizontalAlignment="Left" Margin="505,184,0,0" VerticalAlignment="Top" GroupName="Key6" Width="14"/>
+        <RadioButton x:Name="RB6_4" Content="" HorizontalAlignment="Left" Margin="463,184,0,0" VerticalAlignment="Top" GroupName="Key6" IsChecked="True" Width="14"/>
+        <RadioButton x:Name="RB3_2" Content="" HorizontalAlignment="Left" Margin="524,184,0,0" VerticalAlignment="Top" GroupName="Key3" Width="14"/>
+        <RadioButton x:Name="RB3_4" Content="" HorizontalAlignment="Left" Margin="442,184,0,0" VerticalAlignment="Top" GroupName="Key3" IsChecked="True" Width="14"/>
+        <RadioButton x:Name="RB6_3" Content="" HorizontalAlignment="Left" Margin="484,203,0,0" VerticalAlignment="Top" GroupName="Key6" Width="14"/>
+        <RadioButton x:Name="RB5_3" Content="" HorizontalAlignment="Left" Margin="505,203,0,0" VerticalAlignment="Top" GroupName="Key5" Width="14"/>
+        <RadioButton x:Name="RB5_4" Content="" HorizontalAlignment="Left" Margin="463,203,0,0" VerticalAlignment="Top" GroupName="Key5" Width="14"/>
+        <RadioButton x:Name="RB4_2" Content="" HorizontalAlignment="Left" Margin="524,203,0,0" VerticalAlignment="Top" GroupName="Key4" Width="14"/>
+        <RadioButton x:Name="RB2_4" Content="" HorizontalAlignment="Left" Margin="442,203,0,0" VerticalAlignment="Top" GroupName="Key2" IsChecked="True" Width="14"/>
+        <RadioButton x:Name="RB3_3" Content="" HorizontalAlignment="Left" Margin="484,223,0,0" VerticalAlignment="Top" GroupName="Key3" Width="14"/>
+        <RadioButton x:Name="RB2_3" Content="" HorizontalAlignment="Left" Margin="505,223,0,0" VerticalAlignment="Top" GroupName="Key2" Width="14"/>
+        <RadioButton x:Name="RB4_3" Content="" HorizontalAlignment="Left" Margin="463,223,0,0" VerticalAlignment="Top" GroupName="Key4" Width="14"/>
+        <RadioButton x:Name="RB1_3" Content="" HorizontalAlignment="Left" Margin="524,223,0,0" VerticalAlignment="Top" GroupName="Key1" Width="14"/>
+        <RadioButton x:Name="RB1_4" Content="" HorizontalAlignment="Left" Margin="442,223,0,0" VerticalAlignment="Top" GroupName="Key1" Width="14"/>
+        <Rectangle x:Name="HideButtons" Fill="White" HorizontalAlignment="Left" Height="118" Margin="431,132,0,0" Stroke="White" VerticalAlignment="Top" Width="117" IsHitTestVisible="False"/>
 
     </Grid>
 </Window>

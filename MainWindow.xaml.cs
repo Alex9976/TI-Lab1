@@ -274,6 +274,22 @@ namespace TILab1
             return Result;
         }
 
+        static string RotatingLatticeEncrypt(string SourceText, string key)
+        {
+            string Result = "";
+            int SourceLength = SourceText.Length;
+
+            return Result;
+        }
+
+        static string RotatingLatticeDecrypt(string SourceText, string key)
+        {
+            string Result = "";
+            int SourceLength = SourceText.Length;
+            
+            return Result;
+        }
+
         private void EncryptButton_Click(object sender, RoutedEventArgs e)
         {
             if ((bool)RailFenceRadioButton.IsChecked)
@@ -311,6 +327,30 @@ namespace TILab1
             {
                 ResultText.Text = CaesarDecrypt(SourceText.Text, Int32.Parse(Key.Text));
             }         
+        }
+
+        private void RotatingLatticeRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            HideButtons.Visibility = Visibility.Hidden;
+            Key.IsEnabled = false;
+        }
+
+        private void CaesarRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            HideButtons.Visibility = Visibility.Visible;
+            Key.IsEnabled = true;
+        }
+
+        private void СolumnRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            HideButtons.Visibility = Visibility.Visible;
+            Key.IsEnabled = true;
+        }
+
+        private void RailFenceRadioButton_Click(object sender, RoutedEventArgs e)
+        {
+            HideButtons.Visibility = Visibility.Visible;
+            Key.IsEnabled = true;
         }
     }
 }
