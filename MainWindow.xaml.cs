@@ -274,6 +274,124 @@ namespace TILab1
             return Result;
         }
 
+        static string RotatingLatticeEncrypt(string SourceText, bool[,] Mask)
+        {
+            string Result = "";
+            int i, j, k, Ind = 0;
+            while (SourceText.Length % 25 != 0)
+                SourceText += " ";
+            int SourceLength = SourceText.Length;
+            char[,] Cipher = new char[5, 5];
+            int NumOfBlocks = SourceLength / 25;
+
+            for (k = 0; k < NumOfBlocks; k++)
+            {
+                for (i = 0; i < 5; i++)
+                {
+                    for (j = 0; j < 5; j++)
+                    {
+                        if (Mask[i, j])
+                            Cipher[i, j] = SourceText[Ind++];
+                    }
+                }
+                Mask[2, 2] = false;
+                for (j = 0; j < 5; j++)
+                {
+                    for (i = 4; i >= 0; i--)
+                    {
+                        if (Mask[i, j])
+                            Cipher[j, 4 - i] = SourceText[Ind++];
+                    }
+                }
+                for (i = 4; i >= 0; i--)
+                {
+                    for (j = 4; j >= 0; j--)
+                    {
+                        if (Mask[i, j])
+                            Cipher[4 - i, 4 - j] = SourceText[Ind++];
+                    }
+                }
+                
+                for (j = 4; j >= 0; j--)
+                {
+                    for (i = 0; i < 5; i++)
+                    {
+                        if (Mask[i, j])
+                            Cipher[4 - j, i] = SourceText[Ind++];
+                    }
+                }
+                for (i = 0; i < 5; i++)
+                {
+                    for (j = 0; j < 5; j++)
+                    {
+                        Result += Cipher[i, j];
+                    }
+                }
+                Mask[2, 2] = true;
+            }
+            
+            return Result;
+        }
+
+        static string RotatingLatticeDecrypt(string SourceText, bool[,] Mask)
+        {
+            string Result = "";
+            int i, j, k, Ind = 0;
+            //while (SourceText.Length % 25 != 0)
+            //    SourceText += " ";
+            int SourceLength = SourceText.Length;
+            char[,] Cipher = new char[5, 5];
+            int NumOfBlocks = SourceLength / 25;
+
+            for (k = 0; k < NumOfBlocks; k++)
+            {
+                for (i = 0; i < 5; i++)
+                {
+                    for (j = 0; j < 5; j++)
+                    {
+                        Cipher[i, j] = SourceText[Ind++];
+                    }
+                }
+                for (i = 0; i < 5; i++)
+                {
+                    for (j = 0; j < 5; j++)
+                    {
+                        if (Mask[i, j])
+                            Result += Cipher[i, j];
+                    }
+                }
+                Mask[2, 2] = false;
+                for (j = 0; j < 5; j++)
+                {
+                    for (i = 4; i >= 0; i--)
+                    {
+                        if (Mask[i, j])
+                            Result += Cipher[j, 4 - i];
+                    }
+                }
+                for (i = 4; i >= 0; i--)
+                {
+                    for (j = 4; j >= 0; j--)
+                    {
+                        if (Mask[i, j])
+                           Result += Cipher[4 - i, 4 - j];
+                    }
+                }
+
+                for (j = 4; j >= 0; j--)
+                {
+                    for (i = 0; i < 5; i++)
+                    {
+                        if (Mask[i, j])
+                            Result += Cipher[4 - j, i];
+                    }
+                }                
+                Mask[2, 2] = true;
+            }
+
+            return Result;
+        }
+
         private void EncryptButton_Click(object sender, RoutedEventArgs e)
         {
             if ((bool)RailFenceRadioButton.IsChecked)
@@ -286,6 +404,43 @@ namespace TILab1
             }
             else if ((bool)RotatingLatticeRadioButton.IsChecked)
             {
+                bool[,] Mask = new bool[5, 5];
+                int i, j;
+                for (i = 0; i < 5; i++)
+                {
+                    for (j = 0; j < 5; j++)
+                    {
+                        Mask[i, j] = false;
+                    }
+                }
+                i = 0;
+                j = 0;
+                foreach (FrameworkElement bufButton in wrapPanel.Children)
+                {
+                    if (bufButton is RadioButton)
+                    {
+                        RadioButton radioButton = (RadioButton)bufButton;
+                        if ((bool)radioButton.IsChecked)
+                        {
+                            Mask[i, j] = true;
+                        }
+                        else
+                        {
+                            Mask[i, j] = false;
+
+                        }
+                        if (j < 4)
+                            j++;
+                        else
+                        {
+                            j = 0;
+                            i++;
+                        }
+                    }
+                }
+
+                ResultText.Text = RotatingLatticeEncrypt(SourceText.Text, Mask);
+
             }
             else if ((bool)CaesarRadioButton.IsChecked)
             {
@@ -306,11 +461,72 @@ namespace TILab1
             else if ((bool)RotatingLatticeRadioButton.IsChecked)
             {
 
+                bool[,] Mask = new bool[5, 5];
+                int i, j;
+                for (i = 0; i < 5; i++)
+                {
+                    for (j = 0; j < 5; j++)
+                    {
+                        Mask[i, j] = false;
+                    }
+                }
+                i = 0;
+                j = 0;
+                foreach (FrameworkElement bufButton in wrapPanel.Children)
+                {
+                    if (bufButton is RadioButton)
+                    {
+                        RadioButton radioButton = (RadioButton)bufButton;
+                        if ((bool)radioButton.IsChecked)
+                        {
+                            Mask[i, j] = true;
+                        }
+                        else
+                        {
+                            Mask[i, j] = false;
+
+                        }
+                        if (j < 4)
+                            j++;
+                        else
+                        {
+                            j = 0;
+                            i++;
+                        }
+                    }
+                }
+
+                ResultText.Text = RotatingLatticeDecrypt(SourceText.Text, Mask);
+
             }
             else if ((bool)CaesarRadioButton.IsChecked)
             {
                 ResultText.Text = CaesarDecrypt(SourceText.Text, Int32.Parse(Key.Text));
             }         
+        }
+
+        private void RotatingLatticeRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            wrapPanel.Visibility = Visibility.Visible;
+            Key.IsEnabled = false;
+        }
+
+        private void CaesarRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            wrapPanel.Visibility = Visibility.Hidden;
+            Key.IsEnabled = true;
+        }
+
+        private void СolumnRadioButton_Checked(object sender, RoutedEventArgs e)
+        {
+            wrapPanel.Visibility = Visibility.Hidden;
+            Key.IsEnabled = true;
+        }
+
+        private void RailFenceRadioButton_Click(object sender, RoutedEventArgs e)
+        {
+            wrapPanel.Visibility = Visibility.Hidden;
+            Key.IsEnabled = true;
         }
     }
 }
