@@ -413,61 +413,31 @@ namespace TILab1
                         Mask[i, j] = false;
                     }
                 }
-                if ((bool)RB1_1.IsChecked)
-                    Mask[0, 0] = true;
-                if ((bool)RB1_2.IsChecked)
-                    Mask[0, 4] = true;
-                if ((bool)RB1_3.IsChecked)
-                    Mask[4, 4] = true;
-                if ((bool)RB1_4.IsChecked)
-                    Mask[4, 0] = true;
+                i = 0;
+                j = 0;
+                foreach (FrameworkElement bufButton in wrapPanel.Children)
+                {
+                    if (bufButton is RadioButton)
+                    {
+                        RadioButton radioButton = (RadioButton)bufButton;
+                        if ((bool)radioButton.IsChecked)
+                        {
+                            Mask[i, j] = true;
+                        }
+                        else
+                        {
+                            Mask[i, j] = false;
 
-                if ((bool)RB2_1.IsChecked)
-                    Mask[0, 1] = true;
-                if ((bool)RB2_2.IsChecked)
-                    Mask[1, 4] = true;
-                if ((bool)RB2_3.IsChecked)
-                    Mask[4, 3] = true;
-                if ((bool)RB2_4.IsChecked)
-                    Mask[3, 0] = true;
-
-                if ((bool)RB3_1.IsChecked)
-                    Mask[0, 2] = true;
-                if ((bool)RB3_2.IsChecked)
-                    Mask[2, 4] = true;
-                if ((bool)RB3_3.IsChecked)
-                    Mask[4, 2] = true;
-                if ((bool)RB3_4.IsChecked)
-                    Mask[2, 0] = true;
-
-                if ((bool)RB4_1.IsChecked)
-                    Mask[0, 3] = true;
-                if ((bool)RB4_2.IsChecked)
-                    Mask[3, 4] = true;
-                if ((bool)RB4_3.IsChecked)
-                    Mask[4, 1] = true;
-                if ((bool)RB4_4.IsChecked)
-                    Mask[1, 0] = true;
-
-                if ((bool)RB5_1.IsChecked)
-                    Mask[1, 1] = true;
-                if ((bool)RB5_2.IsChecked)
-                    Mask[1, 3] = true;
-                if ((bool)RB5_3.IsChecked)
-                    Mask[3, 3] = true;
-                if ((bool)RB5_4.IsChecked)
-                    Mask[3, 1] = true;
-
-                if ((bool)RB6_1.IsChecked)
-                    Mask[1, 2] = true;
-                if ((bool)RB6_2.IsChecked)
-                    Mask[2, 3] = true;
-                if ((bool)RB6_3.IsChecked)
-                    Mask[3, 2] = true;
-                if ((bool)RB6_4.IsChecked)
-                    Mask[2, 1] = true;
-
-                Mask[2, 2] = true;
+                        }
+                        if (j < 4)
+                            j++;
+                        else
+                        {
+                            j = 0;
+                            i++;
+                        }
+                    }
+                }
 
                 ResultText.Text = RotatingLatticeEncrypt(SourceText.Text, Mask);
 
@@ -500,61 +470,31 @@ namespace TILab1
                         Mask[i, j] = false;
                     }
                 }
-                if ((bool)RB1_1.IsChecked)
-                    Mask[0, 0] = true;
-                if ((bool)RB1_2.IsChecked)
-                    Mask[0, 4] = true;
-                if ((bool)RB1_3.IsChecked)
-                    Mask[4, 4] = true;
-                if ((bool)RB1_4.IsChecked)
-                    Mask[4, 0] = true;
+                i = 0;
+                j = 0;
+                foreach (FrameworkElement bufButton in wrapPanel.Children)
+                {
+                    if (bufButton is RadioButton)
+                    {
+                        RadioButton radioButton = (RadioButton)bufButton;
+                        if ((bool)radioButton.IsChecked)
+                        {
+                            Mask[i, j] = true;
+                        }
+                        else
+                        {
+                            Mask[i, j] = false;
 
-                if ((bool)RB2_1.IsChecked)
-                    Mask[0, 1] = true;
-                if ((bool)RB2_2.IsChecked)
-                    Mask[1, 4] = true;
-                if ((bool)RB2_3.IsChecked)
-                    Mask[4, 3] = true;
-                if ((bool)RB2_4.IsChecked)
-                    Mask[3, 0] = true;
-
-                if ((bool)RB3_1.IsChecked)
-                    Mask[0, 2] = true;
-                if ((bool)RB3_2.IsChecked)
-                    Mask[2, 4] = true;
-                if ((bool)RB3_3.IsChecked)
-                    Mask[4, 2] = true;
-                if ((bool)RB3_4.IsChecked)
-                    Mask[2, 0] = true;
-
-                if ((bool)RB4_1.IsChecked)
-                    Mask[0, 3] = true;
-                if ((bool)RB4_2.IsChecked)
-                    Mask[3, 4] = true;
-                if ((bool)RB4_3.IsChecked)
-                    Mask[4, 1] = true;
-                if ((bool)RB4_4.IsChecked)
-                    Mask[1, 0] = true;
-
-                if ((bool)RB5_1.IsChecked)
-                    Mask[1, 1] = true;
-                if ((bool)RB5_2.IsChecked)
-                    Mask[1, 3] = true;
-                if ((bool)RB5_3.IsChecked)
-                    Mask[3, 3] = true;
-                if ((bool)RB5_4.IsChecked)
-                    Mask[3, 1] = true;
-
-                if ((bool)RB6_1.IsChecked)
-                    Mask[1, 2] = true;
-                if ((bool)RB6_2.IsChecked)
-                    Mask[2, 3] = true;
-                if ((bool)RB6_3.IsChecked)
-                    Mask[3, 2] = true;
-                if ((bool)RB6_4.IsChecked)
-                    Mask[2, 1] = true;
-
-                Mask[2, 2] = true;
+                        }
+                        if (j < 4)
+                            j++;
+                        else
+                        {
+                            j = 0;
+                            i++;
+                        }
+                    }
+                }
 
                 ResultText.Text = RotatingLatticeDecrypt(SourceText.Text, Mask);
 
@@ -567,25 +507,25 @@ namespace TILab1
 
         private void RotatingLatticeRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            HideButtons.Visibility = Visibility.Hidden;
+            wrapPanel.Visibility = Visibility.Visible;
             Key.IsEnabled = false;
         }
 
         private void CaesarRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            HideButtons.Visibility = Visibility.Visible;
+            wrapPanel.Visibility = Visibility.Hidden;
             Key.IsEnabled = true;
         }
 
         private void СolumnRadioButton_Checked(object sender, RoutedEventArgs e)
         {
-            HideButtons.Visibility = Visibility.Visible;
+            wrapPanel.Visibility = Visibility.Hidden;
             Key.IsEnabled = true;
         }
 
         private void RailFenceRadioButton_Click(object sender, RoutedEventArgs e)
         {
-            HideButtons.Visibility = Visibility.Visible;
+            wrapPanel.Visibility = Visibility.Hidden;
             Key.IsEnabled = true;
         }
     }
